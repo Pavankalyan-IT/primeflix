@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101010">
+    <title>PrimeFlix — Movies and series</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js" defer></script>
+</head>
+<body>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<main id="landing-view" class="landing-view">
+    <section class="landing-hero">
+        <header class="landing-header">
+            <a class="brand landing-brand" href="#"><span class="brand-mark">P</span><span>PRIMEFLIX</span></a>
+            <button id="landing-signin" class="button button-primary" type="button">Sign In</button>
+        </header>
+        <div class="landing-message">
+            <p class="eyebrow">YOUR NEXT MOVIE NIGHT STARTS HERE</p>
+            <h1>Unlimited movies,<br>TV shows, and more</h1>
+            <p>Watch anywhere. Discover your next favorite.</p>
+            <form id="get-started-form" class="get-started-form">
+                <label class="sr-only" for="landing-email">Email address</label>
+                <input id="landing-email" type="email" placeholder="Email address" autocomplete="email" required>
+                <button class="button button-primary" type="submit">Get Started <span aria-hidden="true">›</span></button>
+            </form>
+        </div>
+        <div class="landing-shade"></div>
+        <div class="landing-scroll">SCROLL TO EXPLORE <span>↓</span></div>
+    </section>
+    <section id="landing-preview" class="landing-preview hidden" aria-labelledby="landing-preview-title">
+        <div class="landing-preview-heading">
+            <div>
+                <p class="eyebrow">A FIRST LOOK</p>
+                <h2 id="landing-preview-title">Stories streaming now</h2>
+                <p>Explore a few favorites from the PrimeFlix library.</p>
+            </div>
+            <button class="text-button landing-preview-join" type="button" data-join>Join to start watching <span aria-hidden="true">→</span></button>
+        </div>
+        <div id="landing-preview-grid" class="landing-preview-grid"></div>
+    </section>
+    <section class="reasons-section">
+        <p class="eyebrow">MADE FOR YOUR NEXT MOVIE NIGHT</p>
+        <h2>Reasons to join</h2>
+        <div class="reason-grid">
+            <article class="reason-card"><span>▣</span><h3>Stories for every mood</h3><p>Find action, drama, comedy, and more in one growing library.</p></article>
+            <article class="reason-card"><span>◷</span><h3>Pick up where you left off</h3><p>Settle in and enjoy your favorite stories at your own pace.</p></article>
+            <article class="reason-card"><span>♡</span><h3>Your list, your way</h3><p>Save the titles you want to watch next in My List.</p></article>
+            <article class="reason-card"><span>▱</span><h3>Watch on your screen</h3><p>Enjoy a responsive experience on desktop, tablet, or phone.</p></article>
+        </div>
+    </section>
+    <section id="help" class="faq-section">
+        <p class="eyebrow">GOOD TO KNOW</p>
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+            <details><summary>What is PrimeFlix?<span>+</span></summary><p>PrimeFlix is a place to discover and watch movies and series published in our library.</p></details>
+            <details><summary>How do I create an account?<span>+</span></summary><p>Enter your email above or choose Sign In, then select Create an account. We will send a verification link to your email.</p></details>
+            <details><summary>Where can I watch?<span>+</span></summary><p>Open PrimeFlix in a modern web browser on a computer, tablet, or phone.</p></details>
+            <details><summary>How do I save a title?<span>+</span></summary><p>Sign in and use the plus button on a title to add it to My List.</p></details>
+        </div>
+    </section>
+    <footer class="landing-footer"><a href="#help">Help</a><a href="#privacy">Privacy</a><a href="#terms">Terms of Use</a><span>© PrimeFlix</span></footer>
+</main>
+
+<main id="auth-view" class="auth-page hidden">
+    <header class="brand brand-auth"><span class="brand-mark">P</span><span>PrimeFlix</span></header>
+    <section class="auth-card">
+        <div class="auth-heading">
+            <p class="eyebrow">YOUR NEXT FAVORITE</p>
+            <h1 id="auth-title">Welcome back</h1>
+            <p id="auth-subtitle">Sign in to continue watching.</p>
+        </div>
+        <div id="backend-status" class="backend-status" role="status">Checking backend connection…</div>
+        <form id="login-form" class="form-stack">
+            <label>Email address<input name="email" type="email" autocomplete="email" required></label>
+            <label>Password<span class="password-field"><input name="password" type="password" autocomplete="current-password" minlength="8" required><button class="password-toggle" type="button" aria-label="Show password">Show</button></span></label>
+            <button class="button button-primary" type="submit">Sign in</button>
+            <button class="text-button align-right" type="button" data-action="forgot">Forgot password?</button>
+            <button id="admin-login-toggle" class="text-button" type="button">Administrator sign in</button>
+        </form>
+        <div id="unverified-warning" class="warning-banner hidden">
+            <p>Please verify your email address before logging in. Check your inbox for the verification link.</p>
+            <button id="reverify-button" class="button button-outline" type="button">Re-verify Email</button>
+        </div>
+        <form id="signup-form" class="form-stack hidden">
+            <label>Your name<input name="fullName" type="text" autocomplete="name" maxlength="255" required></label>
+            <label>Email address<input name="email" type="email" autocomplete="email" required></label>
+            <label>Password<span class="password-field"><input name="password" type="password" autocomplete="new-password" minlength="8" maxlength="72" required><button class="password-toggle" type="button" aria-label="Show password">Show</button></span></label>
+            <label>Confirm password<input name="confirmPassword" type="password" autocomplete="new-password" minlength="8" maxlength="72" required></label>
+            <p id="password-match-error" class="field-error hidden">Passwords do not match</p>
+            <button id="signup-submit" class="button button-primary" type="submit" disabled>Create account</button>
+        </form>
+        <form id="email-action-form" class="form-stack hidden">
+            <label>Email address<input name="email" type="email" autocomplete="email" required></label>
+            <button class="button button-primary" id="email-action-submit" type="submit">Send email</button>
+            <button class="text-button" type="button" data-action="resend">Resend verification email</button>
+        </form>
+        <form id="reset-form" class="form-stack hidden">
+            <label>New password<input name="newPassword" type="password" autocomplete="new-password" minlength="8" maxlength="72" required></label>
+            <label>Confirm password<input name="confirmPassword" type="password" autocomplete="new-password" minlength="8" maxlength="72" required></label>
+            <p id="reset-password-error" class="field-error hidden"></p>
+            <button id="reset-submit" class="button button-primary" type="submit">Save new password</button>
+            <button id="reset-request-new" class="text-button hidden" type="button">Request a new reset link</button>
+        </form>
+        <div id="auth-footer" class="auth-footer">
+            <span id="auth-switch-copy">New to PrimeFlix?</span>
+            <button id="auth-switch" class="text-button" type="button">Create an account</button>
+        </div>
+        <button id="back-to-login" class="text-button hidden" type="button">Back to sign in</button>
+        <button id="back-to-landing" class="text-button" type="button">Back to home</button>
+        <p id="admin-login-note" class="admin-login-note hidden">Admin access uses the account configured with <code>ADMIN_EMAIL</code> and <code>ADMIN_PASSWORD</code> in the server environment. It is not created by public registration.</p>
+    </section>
+    <p class="auth-note">A place for stories worth staying up for.</p>
+</main>
+
+<div id="app-view" class="app-shell hidden">
+    <header class="topbar">
+        <a class="brand" href="#" data-view="home"><span class="brand-mark">P</span><span>PrimeFlix</span></a>
+        <nav class="main-nav" aria-label="Main navigation">
+            <button class="nav-link active" type="button" data-view="home">Discover</button>
+            <button class="nav-link" type="button" data-view="watchlist">My List</button>
+            <button id="admin-users-open" class="nav-link hidden" type="button">Admin</button>
+        </nav>
+        <div class="topbar-actions">
+            <span id="user-label" class="user-label"></span>
+            <button id="profile-open" class="button button-outline" type="button">Profile</button>
+            <button id="password-open" class="button button-outline" type="button">Password</button>
+            <button id="admin-open" class="button button-outline hidden" type="button">Add title</button>
+            <button id="admin-view-toggle" class="button button-outline hidden" type="button">Switch to User View</button>
+            <button id="signout-button" class="text-button" type="button">Sign out</button>
+        </div>
+    </header>
+
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <p class="eyebrow">PRIMEFLIX ORIGINALS</p>
+            <h1 id="hero-title">Stories that<br>stay with you.</h1>
+            <p id="hero-meta" class="hero-meta"></p>
+            <p id="hero-copy" class="hero-copy">Find your next great watch in a library made for movie nights.</p>
+            <div class="hero-actions">
+                <button id="hero-play" class="button button-primary hidden" type="button">▶ Play featured title</button>
+                <button id="hero-browse" class="button button-outline" type="button">Explore collection <span aria-hidden="true">→</span></button>
+            </div>
+        </div>
+        <div class="hero-art" aria-hidden="true"><div class="hero-orb"></div><div class="hero-glow"></div></div>
+        <div class="hero-index"><button id="hero-prev" type="button" aria-label="Previous featured title">‹</button><span id="hero-index-current">01</span><i></i><span>NOW SHOWING</span><button id="hero-next" type="button" aria-label="Next featured title">›</button></div>
+    </section>
+
+    <main class="catalog">
+        <div class="catalog-heading">
+            <div>
+                <p class="eyebrow" id="catalog-kicker">CURATED FOR YOU</p>
+                <h2 id="catalog-title">Explore titles</h2>
+            </div>
+            <div class="search-box">
+                <span aria-hidden="true">⌕</span>
+                <input id="search-input" type="search" placeholder="Search titles" aria-label="Search titles">
+            </div>
+        </div>
+        <div id="category-filters" class="category-filters" aria-label="Filter by category"></div>
+        <div id="video-grid" class="video-grid"></div>
+        <div id="empty-state" class="empty-state hidden">
+            <span class="empty-icon">✦</span>
+            <h3 id="empty-title">Nothing here yet</h3>
+            <p id="empty-copy">Check back soon for new stories.</p>
+        </div>
+        <div id="pagination" class="pagination">
+            <button id="prev-page" class="button button-outline" type="button">← Previous</button>
+            <span id="page-label"></span>
+            <button id="next-page" class="button button-outline" type="button">Next →</button>
+        </div>
+    </main>
+    <footer class="site-footer"><span class="brand-mark small-mark">P</span><span>Stories worth staying up for.</span><span class="footer-right">PrimeFlix · 2026</span></footer>
+</div>
+
+<dialog id="video-dialog" class="dialog video-dialog">
+    <button class="dialog-close" type="button" data-close="video-dialog" aria-label="Close">×</button>
+    <video id="player" playsinline preload="metadata"></video>
+    <p id="player-error" class="player-error hidden" role="alert"></p>
+    <div class="player-controls">
+        <button type="button" data-player="back" aria-label="Back 10 seconds">↶ 10</button>
+        <button type="button" data-player="toggle" aria-label="Play" aria-pressed="false">▶ Play</button>
+        <button type="button" data-player="forward" aria-label="Forward 10 seconds">10 ↷</button>
+        <button type="button" data-player="mute" aria-label="Mute or unmute">Mute</button>
+        <input id="player-volume" type="range" min="0" max="1" step="0.05" value="1" aria-label="Volume">
+        <span id="player-current-time" class="player-time">0:00</span>
+        <input id="player-seek" class="player-seek" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek video" disabled>
+        <span id="player-duration" class="player-time">0:00</span>
+        <button type="button" data-player="pip" aria-label="Picture in picture">PiP</button>
+        <button type="button" data-player="fullscreen" aria-label="Enter fullscreen" aria-pressed="false">Fullscreen</button>
+    </div>
+    <div class="dialog-details">
+        <div><p class="eyebrow">NOW PLAYING</p><h2 id="player-title"></h2><p id="player-description"></p></div>
+        <button id="player-watchlist" class="button button-outline" type="button">＋ My List</button>
+    </div>
+</dialog>
+
+<dialog id="admin-dialog" class="dialog admin-dialog">
+    <button class="dialog-close" type="button" data-close="admin-dialog" aria-label="Close">×</button>
+    <p class="eyebrow">LIBRARY MANAGEMENT</p>
+    <h2 id="admin-form-title">Add a title</h2>
+    <form id="admin-form" class="form-stack">
+        <label>Title<input name="title" maxlength="255" required></label>
+        <label>Description<textarea name="description" maxlength="4000" rows="3"></textarea></label>
+        <div class="form-row">
+            <label>Release year<input name="year" type="number" min="1888" max="2200"></label>
+            <label>Rating<input name="rating" maxlength="20" placeholder="PG-13"></label>
+            <label>Duration (minutes)<input id="admin-duration" name="duration" type="number" min="1" max="1000"><span id="admin-duration-seconds" class="label-hint">Detected duration: — seconds</span></label>
+        </div>
+        <label>Categories <span class="label-hint">hold Ctrl (Windows) or Command (Mac) to select multiple</span>
+            <select name="categories" multiple size="4">
+                <option>Action</option><option>Adventure</option><option>Comedy</option><option>Crime</option>
+                <option>Documentary</option><option>Drama</option><option>Fantasy</option><option>Horror</option>
+                <option>Romance</option><option>Science Fiction</option><option>Thriller</option>
+            </select>
+        </label>
+        <label>Video file * <span class="label-hint">MP4, WebM, OGG or MOV</span><input id="admin-video-file" name="video" type="file" accept="video/mp4,video/webm,video/ogg,video/quicktime" required></label>
+        <video id="admin-video-preview" class="media-preview hidden" controls></video>
+        <label>Poster image * <span class="label-hint">JPEG, PNG or WebP</span><input id="admin-poster-file" name="poster" type="file" accept="image/jpeg,image/png,image/webp" required></label>
+        <img id="admin-poster-preview" class="media-preview poster-preview hidden" alt="Selected poster preview">
+        <label>Status<select name="published"><option value="true">Public</option><option value="false">Draft</option></select></label>
+        <button id="admin-save" class="button button-primary" type="submit" disabled>Save Changes</button>
+    </form>
+</dialog>
+
+<dialog id="password-dialog" class="dialog password-dialog">
+    <button class="dialog-close" type="button" data-close="password-dialog" aria-label="Close">×</button>
+    <p class="eyebrow">ACCOUNT SECURITY</p>
+    <h2>Change password</h2>
+    <form id="password-form" class="form-stack">
+        <label>Current password<input name="currentPassword" type="password" autocomplete="current-password" required></label>
+        <label>New password<input name="newPassword" type="password" autocomplete="new-password" minlength="8" maxlength="72" required></label>
+        <label>Confirm new password<input name="confirmPassword" type="password" autocomplete="new-password" minlength="8" maxlength="72" required></label>
+        <p id="change-password-error" class="field-error hidden">Passwords do not match</p>
+        <button class="button button-primary" type="submit">Update password</button>
+    </form>
+</dialog>
+
+<dialog id="profile-dialog" class="dialog password-dialog">
+    <button class="dialog-close" type="button" data-close="profile-dialog" aria-label="Close">×</button>
+    <p class="eyebrow">YOUR ACCOUNT</p>
+    <h2>Profile</h2>
+    <div class="profile-details">
+        <p><span>Name</span><strong id="profile-name"></strong></p>
+        <p><span>Email</span><strong id="profile-email"></strong></p>
+        <p><span>Account type</span><strong id="profile-role"></strong></p>
+        <p><span>Member since</span><strong id="profile-created"></strong></p>
+    </div>
+</dialog>
+
+<dialog id="logout-dialog" class="dialog confirm-dialog">
+    <p class="eyebrow">SIGN OUT</p><h2>Are you sure you want to sign out?</h2>
+    <div class="dialog-actions"><button id="logout-cancel" class="button button-outline" type="button">Stay signed in</button><button id="logout-confirm" class="button button-primary" type="button">Sign out</button></div>
+</dialog>
+<dialog id="admin-users-dialog" class="dialog admin-dialog">
+    <button class="dialog-close" type="button" data-close="admin-users-dialog" aria-label="Close">×</button>
+    <p class="eyebrow">ADMINISTRATION</p>
+    <h2>Content & account dashboard</h2>
+    <div id="admin-stats" class="admin-stats" aria-live="polite"></div>
+    <div class="admin-toolbar">
+        <div class="admin-tabs">
+            <button id="admin-tab-users" class="button button-outline" type="button">Users</button>
+            <button id="admin-tab-videos" class="button button-outline" type="button">Video library</button>
+        </div>
+        <button id="admin-create-user-open" class="button button-primary" type="button">Create member</button>
+        <input id="admin-search" type="search" placeholder="Search email or title" aria-label="Search admin records">
+        <select id="admin-status-filter" aria-label="Filter by status">
+            <option value="">All status</option><option value="true">Public / active</option><option value="false">Draft / inactive</option>
+        </select>
+    </div>
+    <p id="admin-feedback" class="backend-status hidden"></p>
+    <div id="admin-records" class="admin-records"></div>
+    <div class="pagination">
+        <button id="admin-prev" class="button button-outline" type="button">← Previous</button>
+        <span id="admin-page-label"></span>
+        <button id="admin-next" class="button button-outline" type="button">Next →</button>
+    </div>
+</dialog>
+<dialog id="admin-create-user-dialog" class="dialog password-dialog">
+    <button class="dialog-close" type="button" data-close="admin-create-user-dialog" aria-label="Close">×</button>
+    <p class="eyebrow">NEW MEMBER</p>
+    <h2>Create user account</h2>
+    <p class="backend-status">The new member will need to verify their email before signing in.</p>
+    <form id="admin-create-user-form" class="form-stack">
+        <label>Full name<input name="fullName" maxlength="255" required></label>
+        <label>Email<input name="email" type="email" autocomplete="email" required></label>
+        <label>Temporary password<input name="password" type="password" minlength="8" maxlength="72" required></label>
+        <button class="button button-primary" type="submit">Create member</button>
+    </form>
+</dialog>
+</body>
+</html>
