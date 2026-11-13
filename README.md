@@ -27,7 +27,7 @@ Optional:
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `DB_URL` | `jdbc:mysql://localhost:3306/pulsescreen_video` | MySQL connection URL |
+| `DB_URL` | `jdbc:mysql://localhost:3306/primeflix_db` | MySQL connection URL |
 | `FRONTEND_URL` | `http://localhost:8088` | Public base URL used in email links |
 | `APP_CORS_ALLOWED_ORIGINS` | `http://localhost:8088` | Allowed frontend origin when frontend is hosted separately |
 | `ADMIN_EMAIL` | Empty | Email address to provision/promote as the initial admin |
@@ -41,7 +41,7 @@ The email links use `FRONTEND_URL`; `localhost` links only open on the same comp
 
 ## Run
 
-1. Create the `pulsescreen_video` database and a least-privilege MySQL application user.
+1. Create the `primeflix_db` database and a least-privilege MySQL application user.
 2. Configure the environment variables above.
 3. Run `mvn spring-boot:run`, or start `com.netflixclone.Application` from IntelliJ.
 4. Open [http://localhost:8088](http://localhost:8088).
